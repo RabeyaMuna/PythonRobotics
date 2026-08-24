@@ -4,11 +4,7 @@ name: MacOS_CI
 
 # Controls when the action will run. Triggers the workflow on push or pull request
 # events but only for the master branch
-on:
-  push:
-    branches:
-      - master
-  pull_request:
+on: push
 
 
 jobs:
@@ -16,24 +12,24 @@ jobs:
     runs-on: macos-latest
     strategy:
       matrix:
-        python-version: [ '3.13' ]
+        python-version: ['3.13']
     name: Python ${{ matrix.python-version }} CI
     steps:
-      - uses: actions/checkout@v5
-      - run: git fetch --prune --unshallow
+    - uses: actions/checkout@v5
+    - run: git fetch --prune --unshallow
 
-      - name: Update bash
-        run: brew install bash
+    - name: Update bash
+      run: brew install bash
 
-      - name: Setup python
-        uses: actions/setup-python@v6
-        with:
-          python-version: ${{ matrix.python-version }}
+    - name: Setup python
+      uses: actions/setup-python@v6
+      with:
+        python-version: ${{ matrix.python-version }}
 
-      - name: Install dependencies
-        run: |
-          python --version
-          python -m pip install --upgrade pip
-          pip install -r requirements/requirements.txt
-      - name: do all unit tests
-        run: bash runtests.sh
+    - name: Install dependencies
+      run: |
+        python --version
+        python -m pip install --upgrade pip
+        pip install -r requirements/requirements.txt
+    - name: do all unit tests
+      run: bash runtests.sh
