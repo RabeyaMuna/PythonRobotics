@@ -56,6 +56,7 @@ def run_ruff(files, fix):
     res = subprocess.run(
         ['ruff', 'check', f'--config={CONFIG}'] + args + files,
         stdout=subprocess.PIPE,
+        stderr=subprocess.STDOUT,
         encoding='utf-8'
     )
     return res.returncode, res.stdout
