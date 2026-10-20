@@ -120,11 +120,9 @@ def generate_sigma_points(xEst, PEst, gamma):
     # Positive direction
     for i in range(n):
         sigma = np.hstack((sigma, xEst + gamma * Psqrt[:, i:i + 1]))
-
     # Negative direction
     for i in range(n):
         sigma = np.hstack((sigma, xEst - gamma * Psqrt[:, i:i + 1]))
-
     return sigma
 
 
@@ -206,7 +204,6 @@ def ukf_estimation(xEst, PEst, z, u, wm, wc, gamma):
     sigma = predict_sigma_motion(sigma, u)
     xPred = (wm @ sigma.T).T
     PPred = calc_sigma_covariance(xPred, sigma, wc, Q)
-
     #  Update
     zPred = observation_model(xPred)
     y = z - zPred
@@ -218,7 +215,6 @@ def ukf_estimation(xEst, PEst, z, u, wm, wc, gamma):
     K = Pxz @ np.linalg.inv(st)
     xEst = xPred + K @ y
     PEst = PPred - K @ st @ K.T
-
     return xEst, PEst
 
 
@@ -279,10 +275,8 @@ def setup_ukf(nx):
         wm.append(1.0 / (2 * (nx + lamb)))
         wc.append(1.0 / (2 * (nx + lamb)))
     gamma = math.sqrt(nx + lamb)
-
     wm = np.array([wm])
     wc = np.array([wc])
-
     return wm, wc, gamma
 
 

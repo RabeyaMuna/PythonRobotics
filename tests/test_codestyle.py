@@ -52,7 +52,7 @@ ROOT_DIR = os.path.abspath(os.path.dirname(os.path.dirname(__file__)))
 def run_ruff(files, fix):
     if not files:
         return 0, ""
-    args = ['--fix'] if fix else []
+    args = ['--fix', '--unsafe-fixes'] if fix else []
     res = subprocess.run(
         ['ruff', 'check', f'--config={CONFIG}'] + args + files,
         stdout=subprocess.PIPE,
